@@ -24,15 +24,22 @@
     -->
 
 <features>
-    <feature name="apache-directory" version="${apache.directory.version}">
-      <!--<bundle>mvn:org.slf4j/slf4j-api/1.5.6</bundle>-->
-      <!--<bundle>mvn:org.slf4j/slf4j-nop/1.5.6</bundle>-->
-      <bundle>mvn:http://repository.springsource.com/maven/bundles/external!org.bouncycastle/com.springsource.org.bouncycastle.jce/1.39.0</bundle>
-      <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-lang/2.4_2-SNAPSHOT</bundle>
-      <bundle>mvn:commons-collections/commons-collections/${commons-collections.version}</bundle>
-      <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr/3.0.1_2-SNAPSHOT</bundle>
-      <bundle>mvn:org.apache.mina/mina-core/2.0.1</bundle>
-      <bundle>mvn:org.apache.xbean/xbean-spring/${xbean.version}</bundle>
-      <bundle>mvn:org.apache.directory.server/apacheds-osgi/${apache.directory.version}</bundle>
+    <feature name="apache-directory" version="${apache.directory.version}" description="Apache Directory Server">
+        <bundle>mvn:org.bouncycastle/bcprov-jdk15on/${bcprov.version}</bundle>
+
+        <bundle>mvn:commons-io/commons-io/${commons.io.version}</bundle>
+        <bundle>mvn:commons-digester/commons-digester/${commons.digester.version}</bundle>
+        <bundle>mvn:commons-beanutils/commons-beanutils/${commons.beanutils.version}</bundle>
+        <bundle>mvn:commons-validator/commons-validator/${commons.validator.version}</bundle>
+        <bundle>mvn:commons-pool/commons-pool/${commons.pool.version}</bundle>
+        <bundle>mvn:commons-lang/commons-lang/${commons.lang.version}</bundle>
+        <bundle>mvn:commons-collections/commons-collections/${commons.collections.version}</bundle>
+        <bundle>mvn:commons-codec/commons-codec/${commons.codec.version}</bundle>
+        <feature>transaction-api</feature>
+        <bundle>mvn:net.sf.ehcache/ehcache/${ehcache.version}</bundle>
+        <bundle>mvn:org.apache.mina/mina-core/${mina.core.version}</bundle>
+        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr/${apache.servicemix-bundles.antlr.version}</bundle>
+        <bundle>mvn:org.apache.directory.jdbm/apacheds-jdbm1/${org.apache.directory.jdbm.version}</bundle>
+        <bundle>mvn:org.apache.directory.server/apacheds-osgi/${apache.directory.version}</bundle>
     </feature>
 </features>

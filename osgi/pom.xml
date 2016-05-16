@@ -32,7 +32,11 @@
 
   <properties>
     <apache.directory.version>${project.version}</apache.directory.version>
-    <commons-collections.version>3.2.1</commons-collections.version>
+    <apache.servicemix-bundles.antlr.version>2.7.7_5</apache.servicemix-bundles.antlr.version>
+    <commons.beanutils.version>1.9.2</commons.beanutils.version>
+    <commons.codec.version>1.10</commons.codec.version>
+    <commons.digester.version>1.8.1</commons.digester.version>
+    <commons.validator.version>1.5.0</commons.validator.version>
   </properties>
   
   <dependencies>
@@ -65,6 +69,48 @@
       <groupId>org.apache.directory.server</groupId>
       <artifactId>apacheds-interceptor-kerberos</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.directory.server</groupId>
+      <artifactId>apacheds-interceptors-hash</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.directory.server</groupId>
+      <artifactId>apacheds-interceptors-normalization</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.directory.server</groupId>
+        <artifactId>apacheds-server-config</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.directory.server</groupId>
+        <artifactId>apacheds-mavibot-partition</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.directory.api</groupId>
+        <artifactId>api-ldap-codec-standalone</artifactId>
+        <version>${org.apache.directory.api.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.directory.api</groupId>
+        <artifactId>api-ldap-model</artifactId>
+        <version>${org.apache.directory.api.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.directory.api</groupId>
+        <artifactId>api-ldap-schema-data</artifactId>
+        <version>${org.apache.directory.api.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.directory.api</groupId>
+        <artifactId>api-ldap-schema-data</artifactId>
+        <version>${org.apache.directory.api.version}</version>
+        <classifier>schema</classifier>
+        <type>index</type>
     </dependency>
     <dependency>
       <groupId>org.apache.felix</groupId>
@@ -145,16 +191,42 @@
           </executions>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-artifacts</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}</outputDirectory>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.directory.api</groupId>
+                  <artifactId>api-ldap-schema-data</artifactId>
+                  <classifier>schema</classifier>
+                  <type>index</type>
+                  <destFileName>apacheds-schema.index</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
-        <version>2.0.0</version>
         <extensions>true</extensions>
           <configuration>
               <instructions>
                   <Bundle-Name>Apache Directory Server</Bundle-Name>
                   <Bundle-Description>Apache Directory Server - An LDAP v3 Server implementation</Bundle-Description>
                   <Bundle-SymbolicName>org.apache.directory.server</Bundle-SymbolicName>
-                  <Export-Package>jdbm.*,
+                  <Export-Package>
+                      jdbm.*,
                       org.apache.directory.*;version=${project.version},
                       '=META-INF.services.org.apache.xbean.spring.http.apacheds.org.config'
                   </Export-Package>
@@ -162,6 +234,13 @@
                       org.bouncycastle*,
                       *
                   </Import-Package>
+                  <Private-Package>
+                      schema*
+                  </Private-Package>
+                  <Include-Resource>
+                      {maven-resources},
+                      META-INF/apacheds-schema.index=${project.build.directory}/apacheds-schema.index
+                  </Include-Resource>
                   <_failok>true</_failok>
               </instructions>
               <unpackBundle>true</unpackBundle>
