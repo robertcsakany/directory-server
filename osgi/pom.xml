@@ -145,7 +145,7 @@
       </resource>
       <resource>
         <directory>src/main/resources</directory>
-        <filtering>true</filtering>
+        <filtering>false</filtering>
       </resource>
     </resources>
     <plugins>
@@ -226,8 +226,8 @@
                   <Bundle-Description>Apache Directory Server - An LDAP v3 Server implementation</Bundle-Description>
                   <Bundle-SymbolicName>org.apache.directory.server</Bundle-SymbolicName>
                   <Export-Package>
-                      jdbm.*,
-                      org.apache.directory.*;version=${project.version},
+                      jdbm*,
+                      org.apache.directory*;version=${project.version},
                       '=META-INF.services.org.apache.xbean.spring.http.apacheds.org.config'
                   </Export-Package>
                   <Import-Package>
